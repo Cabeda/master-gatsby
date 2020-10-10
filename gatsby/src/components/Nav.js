@@ -11,6 +11,15 @@ export default function Nav() {
         <li>
           <Link to="/pizzas/">Pizza Menu</Link>
         </li>
+        <li>
+          <Link to="/">LOGO</Link>
+        </li>
+        <li>
+          <Link to="/slicemasters">SliceMasters</Link>
+        </li>
+        <li>
+          <Link to="/order">Order Ahead!</Link>
+        </li>
       </ul>
     </nav>
   );
