@@ -52,7 +52,7 @@ export default function OrderPage({ data }) {
               onChange={updateValue}
             />
           </label>
-          <label htmlFor="email" disabled={loading}>
+          <label htmlFor="email">
             Email
             <input
               type="email"

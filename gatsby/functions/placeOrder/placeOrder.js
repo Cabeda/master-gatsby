@@ -32,38 +32,29 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-exports.handler = async (event, context) => {
-  const body = JSON.parse(event.body);
+module.exports = async (req, res) => {
+  const { body } = req;
 
   // check if they have filled the honeypot
   if (body.mapleSyrup) {
-    return {
-      statusCode: 400,
-      body: JSON.stringify({ message: 'Boop beep bop zzzzzttt good bye' }),
-    };
+    return req.status(400).json({ message: 'Boop beep bop zzzzzttt good bye' });
   }
   // validate the data coming in is correct
   const requiredFields = ['email', 'name', 'order'];
 
   for (const field of requiredFields) {
     if (!body[field]) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({
-          message: `Opps! You are missing the ${field} field`,
-        }),
-      };
+      return req.status(400).json({
+        message: `Opps! You are missing the ${field} field`,
+      });
     }
   }
 
   // make sure they actually have items in that order
   if (!body.order.length) {
-    return {
-      statusCode: 400,
-      body: JSON.stringify({
-        message: `Why order no pizza?`,
-      }),
-    };
+    return req.status(400).json({
+      message: `Why order no pizza?`,
+    });
   }
 
   // send the email
@@ -74,8 +65,5 @@ exports.handler = async (event, context) => {
     html: generateOrderEmail({ order: body.order, total: body.total }),
   });
 
-  return {
-    statusCode: 200,
-    body: JSON.stringify({ message: 'Success' }),
-  };
+  return req.status(200).json({ message: 'Success' });
 };
